@@ -1,8 +1,14 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%-- 
     Document   : index
     Created on : 26.03.2018, 17:26:10
     Author     : dolodarenko
 --%>
+
+<sql:query var="subjects" dataSource="jdbc/IFP">
+    select subject_id, name from subject
+</sql:query>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -29,8 +35,10 @@
                     <td>
                         <form action="response.jsp">
                             <strong>Select a subject:</strong>
-                            <select name="student_id">
-                                <option></option>
+                            <select name="subject_id">
+                                <c:forEach var="row" items="${subjects.rows}">
+                                    <option value="${row.subject_id}">${row.name}</option>
+                                </c:forEach>
                             </select>
                             <input type="submit" value="Submit" name="Submit" />
                         </form>
